@@ -25,7 +25,7 @@ public class NasaDataProvider {
         String inputLine;
         String stringData = "";
         while ((inputLine = in.readLine()) != null){
-        	System.out.println(inputLine.replaceAll(",", ",\n"));
+        	//System.out.println(inputLine.replaceAll(",", ",\n"));
         	stringData += inputLine;
         }
         in.close();
@@ -74,7 +74,7 @@ public class NasaDataProvider {
         						  		  .getJSONObject(asteroidArrayIndex)
         						  		  .getBoolean("is_potentially_hazardous_asteroid");
 
-        		System.out.printf("%s - %-19s: %-6.2f mln km from Earth, %-7.3f km is minimal diameter, %-17s;%n",dateOf.toString(), name,
+        		System.out.printf("%s - %-24s: %-6.2f mln km from Earth, %-7.3f km is minimal diameter, %-17s;%n",dateOf.toString(), name,
         												distance, diameter, (ifHazardous == true ? "it is hazardous" : "it is't hazardous"));
          	}
         }
