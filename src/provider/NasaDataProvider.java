@@ -5,6 +5,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.ArrayList;
 
 import org.json.JSONObject;
 
@@ -41,10 +43,12 @@ public class NasaDataProvider {
         
         System.out.println("Period is: " + start + " - " + end);
         
+        List <Asteroid> asteroidList = new ArrayList<Asteroid>();
+        
         for (LocalDate dateOf = start; dateOf.isBefore(end.plusDays(1)); dateOf = dateOf.plusDays(1)) {
         	for(int asteroidArrayIndex = 0; asteroidArrayIndex < data.getJSONObject("near_earth_objects")
         															 .getJSONArray(dateOf.toString()).length();
-        																										++asteroidArrayIndex) {
+        																									++asteroidArrayIndex) {
         		String name = data.getJSONObject("near_earth_objects")
         						  .getJSONArray(dateOf.toString())
         						  .getJSONObject(asteroidArrayIndex)
@@ -58,10 +62,6 @@ public class NasaDataProvider {
         						  	 		.getJSONObject("miss_distance")
         						  	 		.getString("kilometers");
         		
-        		String distanceWithoutPoint = distanceString.substring(0, distanceString.indexOf("."));
-        		Integer distanceInt = Integer.parseInt(distanceWithoutPoint);
-        		Float distance = distanceInt/1000000f;
-
         		Float diameter = data.getJSONObject("near_earth_objects")
         						  	 .getJSONArray(dateOf.toString())
         						  	 .getJSONObject(asteroidArrayIndex)
@@ -73,10 +73,12 @@ public class NasaDataProvider {
         						  		  .getJSONArray(dateOf.toString())
         						  		  .getJSONObject(asteroidArrayIndex)
         						  		  .getBoolean("is_potentially_hazardous_asteroid");
-
-        		System.out.printf("%s - %-24s: %-6.2f mln km from Earth, %-7.3f km is minimal diameter, %-17s;%n",dateOf.toString(), name,
-        												distance, diameter, (ifHazardous == true ? "it is hazardous" : "it is't hazardous"));
-         	}
+        		
+        		asteroidList.add(new Asteroid(dateOf, name, distanceString, diameter, ifHazardous));
+          	}
+        }
+        for(Asteroid a : asteroidList) {
+        	System.out.println(a);
         }
 	}
 }
