@@ -28,8 +28,6 @@ public class Asteroid {
 		return String.format("%s - %-24s: %-6.2f mln km from Earth, %-7.3f km is minimal diameter, %-17s;", date.toString(), name, distanceFloat, diameter,
 				                                                                             (hazardous == true ? "it is hazardous" : "it is't hazardous"));
 	}
-
-	
 	
 	protected LocalDate getDate() {
 		return date;
